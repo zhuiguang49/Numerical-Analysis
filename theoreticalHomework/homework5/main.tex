@@ -1,0 +1,359 @@
+\documentclass[a4paper]{article}
+\usepackage[affil-it]{authblk}
+\usepackage[backend=bibtex,style=numeric]{biblatex}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{float, caption}
+\usepackage{graphicx}
+\geometry{margin=1.5cm, vmargin={0pt,1cm}}
+\setlength{\topmargin}{-1cm}
+\setlength{\paperheight}{29.7cm}
+\setlength{\textheight}{25.3cm}
+
+\addbibresource{citation.bib}
+
+\begin{document}
+% =================================================
+\title{Numerical Analysis homework \# 5}
+
+\author{Guang Zhang 3230105121
+  \thanks{Electronic address: \texttt{zhuiguang49@foxmail.com}}}
+\affil{(Information and Computing Science, Class XJ2301), Zhejiang University }
+
+\date{Finish time: \today}
+
+\maketitle
+
+
+% ============================================
+\section*{I. Question I}
+
+\subsection*{Verification of Vector Space Axioms (Definition B.2)}
+Let $u, v, w \in \mathcal{C}[a,b]$ and $a, b \in {C}$. Since the sum of continuous functions is continuous and the scalar multiple of a continuous function is continuous, $\mathcal{C}[a,b]$ is closed under these operations. We verify the axioms pointwise for all $t \in [a,b]$:
+
+\begin{enumerate}
+    \item \textbf{(VSA-1) Commutativity:}
+    $u(t) + v(t) = v(t) + u(t)$ holds by the commutativity of addition in ${C}$. Thus, ${u} +  {v} = {v} + {u}$.
+
+    \item \textbf{(VSA-2) Associativity:}
+    $(u(t) + v(t)) + w(t) = u(t) + (v(t) + w(t))$ holds by the associativity of addition in ${C}$. Thus, $({u} + {v}) + {w} = {u} + ({v} + {w})$.
+
+    \item \textbf{(VSA-3) Compatibility:}
+    $(ab)u(t) = a(bu(t))$ holds by the associativity of multiplication in ${C}$. Thus, $(ab){u} = a(b{u})$.
+
+    \item \textbf{(VSA-4) Additive Identity:}
+    Let ${0}$ be the zero function. Since constant functions are continuous, ${0} \in \mathcal{C}[a,b]$. Clearly, $u(t) + 0 = u(t)$. Thus, ${u} + {0} = {u}$.
+
+    \item \textbf{(VSA-5) Additive Inverse:}
+    For any $u \in \mathcal{C}[a,b]$, let $-u$ be defined by $(-u)(t) = -u(t)$. This is continuous, and $u(t) + (-u(t)) = 0$. Thus, ${u} + (-{u}) = {0}$.
+
+    \item \textbf{(VSA-6) Multiplicative Identity:}
+    Let $1 \in {C}$. Then $1 \cdot u(t) = u(t)$. Thus, $1{u} = {u}$.
+
+    \item \textbf{(VSA-7) Distributive Laws:}
+    By the distributivity of complex numbers:
+    $(a+b)u(t) = au(t) + bu(t)$ implies $(a+b){u} = a{u} + b{u}$.
+    $a(u(t) + v(t)) = au(t) + av(t)$ implies $a({u} + {v}) = a{u} + a{v}$.
+\end{enumerate}
+
+\subsection*{Verification of Inner Product Axioms (Definition B.165)}
+We verify the properties for $\langle u, v \rangle = \int_{a}^{b} \rho(t) u(t) \overline{v(t)} \, dt$, given $\rho(t) > 0$.
+
+\begin{enumerate}
+    \item \textbf{(IP-1) Real Positivity:}
+    $\langle u, u \rangle = \int_{a}^{b} \rho(t) |u(t)|^2 \, dt$. Since $\rho(t) > 0$ and $|u(t)|^2 \geq 0$, the integral is non-negative. $\langle u, u \rangle \geq 0$.
+
+    \item \textbf{(IP-2) Definiteness:}
+    $\langle u, u \rangle = 0 \iff \int_{a}^{b} \rho(t) |u(t)|^2 \, dt = 0$. Since $\rho(t)|u(t)|^2$ is non-negative and continuous, the integral is zero if and only if the function is identically zero. As $\rho(t) > 0$, this implies $|u(t)|^2 = 0$, from which we can obtain that $u(t) \equiv 0$.
+
+    \item \textbf{(IP-3) Additivity in the first slot:}
+    $\langle u + v, w \rangle = \int \rho(u+v)\overline{w} = \int \rho u\overline{w} + \int \rho v\overline{w} = \langle u, w \rangle + \langle v, w \rangle$ by the linearity of integration.
+
+    \item \textbf{(IP-4) Homogeneity in the first slot:}
+    $\langle au, w \rangle = \int \rho (au)\overline{w} = a \int \rho u\overline{w} = a\langle u, w \rangle$.
+
+    \item \textbf{(IP-5) Conjugate Symmetry:}
+    $\overline{\langle v, u \rangle} = \overline{\int \rho v \overline{u}} = \int \overline{\rho v \overline{u}} = \int \rho \overline{v} u = \int \rho u \overline{v} = \langle u, v \rangle$ (using $\rho \in {R}$).
+\end{enumerate}
+
+\subsection*{Verification of Normed Vector Space (Definition B.170)}
+We define the induced norm $\|u\|_2 = \sqrt{\langle u, u \rangle}$ (Definition B.170) and verify it satisfies the standard norm axioms:
+
+\begin{enumerate}
+    \item \textbf{Positivity and Definiteness:}
+    From (IP-1) and (IP-2), $\|u\|_2 \geq 0$ and $\|u\|_2 = 0 \iff u = {0}$.
+
+    \item \textbf{Homogeneity:}
+    $\|au\|_2^2 = \langle au, au \rangle = a \overline{a} \langle u, u \rangle = |a|^2 \|u\|_2^2$.
+    from which we can obtan $\|au\|_2 = |a| \|u\|_2$.
+
+    \item \textbf{Triangle Inequality:}
+    We must show $\|u+v\|_2 \leq \|u\|_2 + \|v\|_2$.
+    Expansion of the squared norm gives:
+    \[
+    \|u+v\|_2^2 = \langle u+v, u+v \rangle = \|u\|_2^2 + \langle u, v \rangle + \overline{\langle u, v \rangle} + \|v\|_2^2 = \|u\|_2^2 + 2\text{Re}(\langle u, v \rangle) + \|v\|_2^2.
+    \]
+    By Cauchy-Schwarz inequality, $|\langle u, v \rangle| \leq \|u\|_2 \|v\|_2$.
+    Since $\text{Re}(z) \leq |z|$, we have:
+    \[
+    \|u+v\|_2^2 \leq \|u\|_2^2 + 2\|u\|_2 \|v\|_2 + \|v\|_2^2 = (\|u\|_2 + \|v\|_2)^2.
+    \]
+    Taking the square root gives $\|u+v\|_2 \leq \|u\|_2 + \|v\|_2$.
+\end{enumerate}
+Since $\mathcal{C}[a,b]$ satisfies all axioms for a vector space, an inner product space, and the induced norm satisfies the norm axioms, Theorem 5.7 is proved. 
+
+
+\section*{II. Question II}
+
+From Definition 2.42, the Chebyshev polynomial of degree $n\in N$ of the first kind is a polynomial $T_n: [-1,1]\to[-1,1]$ and we have 
+\begin{equation}
+  T_n(x)=\cos(n\arccos x)
+\end{equation}
+
+\subsection*{II.a}
+
+Through Theorem 5.7, we have
+\begin{equation}
+  <T_i,T_j>=\int_{-1}^1 \frac{1}{\sqrt{1-x^2}} \cos (i\arccos x) \cos(j \arccos x)dx
+\end{equation}
+in which $\cos (i\arccos x) \cos(j \arccos x)=\frac{1}{2}[\cos((i+j)\arccos x)+\cos((i-j) \arccos x)]$
+Thus, we have 
+\begin{itemize}
+  \item when $i=j=0$, we can obtain that
+  \begin{equation}
+    <T_i,T_j>=\int_{-1}^1\frac{1}{\sqrt{1-x^2}}dx=\arcsin x\big|_{-1}^1=\pi
+  \end{equation}
+  \item when $i=j\neq 0$, we have 
+  \begin{equation}
+    <T_i,T_j>=\int_{-1}^1\frac{1}{2\sqrt{1-x^2}}[\cos((i+j)\arccos x)+1]dx=\int_{-1}^1\frac{1}{2\sqrt{1-x^2}}dx=\frac{\pi}{2}
+  \end{equation}
+  \item when $i\neq j$, we have
+  \begin{equation}
+    <T_i,T_j>=\int_{-1}^1\frac{1}{2\sqrt{1-x^2}}[\cos((i+j)\arccos x)+\cos((i-j)\arccos x)]dx=0
+  \end{equation}   
+\end{itemize}
+So $(<T_i,T_j>)\ >0$ holds when $i=j$, while $<T_i,T_j>=0$ holds when $i\neq j$, which means that they are orthogonal on $[-1,1]$
+
+
+\subsection*{II.b}
+
+From II.a we have known that $T_i$ and $T_j$ is orthogonal, so what we need to do is to normalize them.
+Since $||T_n||_2=\sqrt{<T_n,T_n>}$, we can obtain that:
+\begin{equation}
+  ||T_n||_2=\begin{cases}
+    \sqrt{\frac{\pi}{2}},&n\neq 0\\
+    \sqrt{\pi}, & n=0
+  \end{cases}
+\end{equation}
+So it is easy to obtain that
+\begin{align}
+  T_0^*=\frac{T_0}{||T_0||_2}=\frac{1}{\sqrt{\pi}} \label{eq:T0} \\ 
+  T_1^{*}=\frac{T_1}{||T_1||_2}=\sqrt{\frac{2}{\pi}}x \label{eq:T1} \\ 
+  T_2^{*}=\frac{T_2}{||T_2||_2}=\sqrt{\frac{2}{\pi}}(2x^2-1) \label{eq:T2}
+\end{align}
+Then $\{T_0^*,T_1^*,T_2^*\}$ arrive at an orthonormal system.
+\section*{III. Question III}
+
+\subsection*{III.a}
+From Question II we have obtained a set of Chebyshev polynomial orthonormal systems ${T_0^*,T_1^*,T_2^*}$, in which $T_0^*,T_1^*,T_2^*$ satisfies equation (\ref{eq:T0})(\ref{eq:T1})(\ref{eq:T2}).
+And with Fourier expansion, we have
+\begin{equation}
+  y(x)=\sum_{i=0}^2(y,T_i^{*})T_i^{*}
+\end{equation}
+so we compute $(y,T_i^{*})$ as follows:
+\begin{align}
+  (y,T_0^{*})=\int_{-1}^1\frac{1}{\sqrt{\pi}}dx=\frac{2}{\sqrt{\pi}}\\
+  (y,T_1^*)=\int_{-1}^1\sqrt{\frac{2}{\pi}}xdx=0\\
+  (y,T_2^*)=\int_{-1}^1\sqrt{\frac{2}{\pi}}(2x^2-1)dx=-\frac{2}{3}\sqrt{\frac{2}{\pi}}
+\end{align}
+Thus we have
+\begin{equation}
+  y(x)=\frac{2}{\pi}-\frac{2}{3}\sqrt{\frac{2}{\pi}}\times \sqrt{\frac{2}{\pi}}(2x^2-1)=-\frac{8}{3\pi}x^2+\frac{10}{3\pi}
+\end{equation}
+
+\subsection*{III.b}
+By using the single polynomial independent list $\{1,x,x^2\}$,
+first, we compute the Gram matrix $G(1,x,x^2)$. In the integral as follows:
+\begin{equation}
+  \int_{-1}^1\frac{x^k}{\sqrt{1-x^2}}dx
+\end{equation}
+we denote $x=\cos \theta$, then $dx=-\sin \theta d\theta$, then we can obtain that
+\begin{eqnarray}
+  \int_{-1}^1\frac{x^k}{\sqrt{1-x^2}}dx=\int_{\pi}^0\frac{\cos^k\theta}{\sin\theta}(-\sin\theta)d \theta=\int_0^{\pi}\cos^k\theta d\theta
+\end{eqnarray}
+From which we can obtain that
+\begin{align}
+  <1,1>=\int_{-1}^1 \frac{1}{\sqrt{1-x^2}}dx=\pi\\
+  <1,x>=\int_{-1}^1 \frac{x}{\sqrt{1-x^2}}dx=0\\
+  <1,x^2>=\int_{-1}^1 \frac{x^2}{\sqrt{1-x^2}}dx=\frac{\pi}{2}\\
+  <x,x>=\int_{-1}^1 \frac{x^2}{\sqrt{1-x^2}}dx=\frac{\pi}{2}\\
+  <x,x^2>=\int_{-1}^1 \frac{x^3}{\sqrt{1-x^2}}dx=0\\
+  <x^2,x^2>=\int_{-1}^1 \frac{x^4}{\sqrt{1-x^2}}dx=\frac{3\pi}{8}
+\end{align}
+Then the Gram matrix will be 
+\begin{equation}
+  G(1,x,x^2)=\begin{bmatrix}
+    \pi & 0 & \frac{\pi}{2}\\
+    0 & \frac{\pi}{2} &0\\
+    \frac{\pi}{2} &0 & \frac{3\pi}{8}
+  \end{bmatrix}
+\end{equation}
+while $c=[<y,1>,<y,x>,<y,x^2>]^T=[2,0,\frac{2}{3}]^T$, then we solve the equation $G^Ta=c$, from which we can obatin that 
+\begin{equation}
+  a=[\frac{10}{3\pi},0,\frac{-8}{3\pi}]
+\end{equation}
+which means that $y(x)=-\frac{8}{3\pi}x^2+\frac{10}{3\pi}$
+\section*{IV. Question IV}
+
+\subsection*{IV.a}
+
+We are given $N=12$ data points with $x_i \in \{1, 2, \dots, 12\}$ and the weight function $\rho(x) = 1$. The inner product is defined as:
+\begin{equation}
+    \langle u, v \rangle = \sum_{i=1}^{12} u(x_i) v(x_i)
+\end{equation}
+We apply the Gram-Schmidt process to the basis $\{1, x, x^2\}$. First we compute the norm squared:
+\[ \|u_0\|^2 = \langle 1, 1 \rangle = \sum_{i=1}^{12} 1 = 12 \]
+Thus, the first orthonormal polynomial is:
+\begin{equation}
+    u_0^*(t) = \frac{1}{\sqrt{12}}
+\end{equation}
+Then we compute the projection of $x$ onto $u_0^*$:
+\[ \langle x, u_0^* \rangle = \sum_{i=1}^{12} x_i \cdot \frac{1}{\sqrt{12}} = \frac{1}{\sqrt{12}} \cdot \frac{12(13)}{2} = \frac{78}{\sqrt{12}} \]
+and then construct the orthogonal vector $v_1$:
+\[ v_1(t) = x - \langle x, u_0^* \rangle u_0^*(t) = x - \frac{78}{\sqrt{12}} \cdot \frac{1}{\sqrt{12}} = x - \frac{78}{12} = x - 6.5 \]
+then the norm squared of $v_1$:
+\[ \|v_1\|^2 = \sum_{i=1}^{12} (x_i - 6.5)^2 \]
+Since the points are symmetric around 6.5, this sum is:
+\[ 2 \sum_{k=0}^{5} (0.5 + k)^2 = 2 (0.5^2 + 1.5^2 + 2.5^2 + 3.5^2 + 4.5^2 + 5.5^2) = 2(71.5) = 143 \]
+Thus, the second orthonormal polynomial is:
+\begin{equation}
+    u_1^*(t) = \frac{x - 6.5}{\sqrt{143}}
+\end{equation}
+We compute projections onto previous vectors. Using $\sum x_i^2 = 650$ and $\sum x_i^3 = 6084$:
+\[ \langle x^2, u_0^* \rangle = \frac{1}{\sqrt{12}} \sum x_i^2 = \frac{650}{\sqrt{12}} \]
+\[ \langle x^2, u_1^* \rangle = \frac{1}{\sqrt{143}} \sum x_i^2(x_i - 6.5) = \frac{1}{\sqrt{143}} (6084 - 6.5 \cdot 650) = \frac{1859}{\sqrt{143}} \]
+Note that $\frac{1859}{143} = 13$, so the coefficient simplifies nicely in later steps. thus we construct $v_2$:
+\begin{align*}
+    v_2(t) &= x^2 - \frac{650}{\sqrt{12}} u_0^*(t) - \frac{1859}{\sqrt{143}} u_1^*(t) \\
+           &= x^2 - \frac{650}{12} - 13(x - 6.5) \\
+           &= x^2 - 13x + (84.5 - 54.166\dots) \\
+           &= x^2 - 13x + \frac{91}{3}
+\end{align*}
+then we compute the norm squared $\|v_2\|^2$. A direct summation or the property $\|v_2\|^2 = \|x^2\|^2 - |\langle x^2, u_0^* \rangle|^2 - |\langle x^2, u_1^* \rangle|^2$ using $\sum x^4 = 60710$ yields:
+\[ \|v_2\|^2 = \frac{4004}{3} \]
+Thus, the third orthonormal polynomial is:
+\begin{equation}
+    u_2^*(t) = \frac{x^2 - 13x + \frac{91}{3}}{\sqrt{\frac{4004}{3}}}=\sqrt{\frac{3}{4004}}(x^2 - 13x + \frac{91}{3})
+\end{equation}
+So the orthonormal polynomials are $\{\frac{1}{2\sqrt{3}},\frac{x-\frac{13}{2}}{\sqrt{143}},\sqrt{\frac{3}{4004}}(x^2 - 13x + \frac{91}{3})\}$
+
+
+
+
+\subsection*{IV.b}
+We calculate the Fourier coefficients $c_k = \langle y, u_k^* \rangle$ using the data sums: $\sum y_i = 1662$, $\sum x_i y_i = 11392$, and $\sum x_i^2 y_i = 109750$, we can obtain that
+
+\begin{itemize}
+  \item $c_0 = \langle y, u_0^* \rangle = \frac{1}{\sqrt{12}} \sum y_i = \frac{1662}{\sqrt{12}}$
+  \item $c_1 = \langle y, u_1^* \rangle = \frac{1}{\sqrt{143}} (\sum x_i y_i - 6.5 \sum y_i) = \frac{11392 - 10803}{\sqrt{143}} = \frac{589}{\sqrt{143}}$
+  \item $c_2 = \langle y, u_2^* \rangle = \frac{1}{\|v_2\|} (\sum x_i^2 y_i - 13 \sum x_i y_i + \frac{91}{3} \sum y_i)$
+\end{itemize}
+And by calculating 
+   \[ 109750 - 13(11392) + \frac{91}{3}(1662) = 109750 - 148096 + 50414 = 12068. \]
+we have $c_2 = \sqrt{\frac{3}{4004}}12068$.
+While the best approximation is $\hat{\varphi}(t) = c_0 u_0^*(t) + c_1 u_1^*(t) + c_2 u_2^*(t)$. We rewrite this in the form $a_0 + a_1 x + a_2 x^2$.\newline
+Then let's consider the coefficient of $x^2$, which we note $a_2$,it is easy to know that only $u_2^*$ contains $x^2$.
+\[ a_2 = \frac{c_2}{\|v_2\|} = \frac{12068}{4004/3} = \frac{36204}{4004} \approx {9.0419}. \]
+Then coefficient of $x$, which we called $a_1$, contributions are from $u_1^*$ and $u_2^*$, so we have
+\[ a_1 = \frac{c_1}{\sqrt{143}} - 13 a_2 = \frac{589}{143} - 13(9.0419) = 4.1188 - 117.545 \approx {-113.43}. \]\newline 
+Then constant term $a_0$, Contributions are from all three, we have
+\[ a_0 = \frac{c_0}{\sqrt{12}} - 6.5 \frac{c_1}{\sqrt{143}} + \frac{91}{3} a_2 \approx {386.00}\]
+So the computed polynomial is:
+\[ \hat{\varphi}(x) = 386.00 - 113.43 x + 9.04 x^2. \]
+These values exactly match the result from the Normal Equations method in Example 5.55 ($a = [386.00, -113.43, 9.04]^\top$), verifying the correctness of the orthonormal polynomial approach.
+
+
+\subsection*{IV.c}
+\paragraph{1. Reusable Calculations}
+The construction of the orthonormal system actually depends only on the inner product space definition, which is determined by:
+\begin{itemize}
+    \item The sampling points $x_i$ (the domain),
+    \item The weight function $\rho(x)$ (here $\rho=1$),
+    \item The original linearly independent basis (here $\{1, x, x^2\}$).
+\end{itemize}
+Thus it does not depend on the target values $y_i$. Therefore, the orthonormal polynomials $u_0^*(x), u_1^*(x), u_2^*(x)$ can be fully reused for any new dataset $y$.
+
+\paragraph{2. Non-Reusable Calculations}
+Since the target vector $y$ changes, any quantity linearly dependent on $y$ must be recomputed:
+\begin{itemize}
+    \item The Fourier coefficients $c_k = \langle y, u_k^* \rangle = \sum_{i=1}^{N} y_i u_k^*(x_i)$.
+    \item The final best approximation coefficients $a_i$ in the standard basis form $\sum a_i x^i$.
+\end{itemize}
+In my opinion, the reuse of orthonormal polynomials highlights a critical advantage regarding Numerical Stability and Conditioning:
+
+\begin{itemize}
+    \item {Ill-conditioning of Normal Equations:} In the Normal Equation approach ($G {a} = c$), the Gram matrix $G$ is formed by the monomial basis $\{1, x, x^2, \dots\}$. As noted in Example 5.42, this matrix resembles the Hilbert matrix, which is notoriously ill-conditioned. Even if $G$ (or its inverse) is pre-computed and reused, the operation involves a matrix with a very high condition number, making the solution highly sensitive to perturbations or rounding errors in $y$.
+    
+    \item Perfect Conditioning of Orthonormal Systems: By reusing the pre-computed orthonormal basis $\{u_k^*\}$, the corresponding Gram matrix is the Identity matrix $I$. The condition number is exactly 1. Finding the new best approximation reduces to simple orthogonal projections, which are numerically stable operations.
+    
+    \item The calculation of each coefficient $c_k$ is independent of the others. If we were to increase the degree of the polynomial for a new fit, previous coefficients would remain valid. In the Normal Equations, changing the degree requires solving a completely new linear system.
+\end{itemize}
+
+\section*{V. Question V}
+
+
+Let $(\sigma_k, u_k, v_k)$ be the singular system of $A$ with rank $r$. We can express $A$ and its pseudo-inverse $A^+$ as
+\begin{equation}
+  A = \sum_{k=1}^r \sigma_k v_k u_k^* \quad \text{and} \quad A^+ = \sum_{k=1}^r \frac{1}{\sigma_k} u_k v_k^*
+\end{equation}
+
+\subsubsection*{Proof of Theorem 5.66}
+
+First, we verify the Hermitian properties. We have
+\begin{equation}
+  AA^+ = \left(\sum_{j=1}^r \sigma_j v_j u_j^*\right) \left(\sum_{k=1}^r \frac{1}{\sigma_k} u_k v_k^*\right) = \sum_{j=1}^r \sum_{k=1}^r \frac{\sigma_j}{\sigma_k} v_j (u_j^* u_k) v_k^*
+\end{equation}
+Using the orthogonality condition $u_j^* u_k = \delta_{jk}$, we obtain
+\begin{equation}
+  AA^+ = \sum_{k=1}^r v_k v_k^*
+\end{equation}
+Since $(v_k v_k^*)^* = v_k v_k^*$, $AA^+$ is Hermitian. Similarly, using $v_j^* v_k = \delta_{jk}$, we have
+\begin{equation}
+  A^+A = \left(\sum_{j=1}^r \frac{1}{\sigma_j} u_j v_j^*\right) \left(\sum_{k=1}^r \sigma_k v_k u_k^*\right) = \sum_{k=1}^r u_k u_k^*
+\end{equation}
+Since $(u_k u_k^*)^* = u_k u_k^*$, $A^+A$ is Hermitian.
+Next, we verify that $A A^+ A = A$ and $A^+ A A^+ = A^+$.
+\begin{equation}
+  AA^+A = (AA^+)A = \left(\sum_{k=1}^r v_k v_k^*\right) \left(\sum_{j=1}^r \sigma_j v_j u_j^*\right) = \sum_{j=1}^r \sigma_j v_j u_j^* = A
+\end{equation}
+\begin{equation}
+  A^+AA^+ = A^+(AA^+) = \left(\sum_{k=1}^r \frac{1}{\sigma_k} u_k v_k^*\right) \left(\sum_{j=1}^r v_j v_j^*\right) = \sum_{k=1}^r \frac{1}{\sigma_k} u_k v_k^* = A^+
+\end{equation}
+
+\subsubsection*{Proof of Lemma 5.67}
+
+\begin{itemize}
+  \item when $A$ has linearly independent columns, the rank is $r=n$. The set $\{u_1, \dots, u_n\}$ forms an orthonormal basis for ${C}^n$, so we have $\sum_{k=1}^n u_k u_k^* = I$. Thus
+  \begin{equation}
+    (A^*A)^{-1} = \left(\sum_{k=1}^n \sigma_k^2 u_k u_k^*\right)^{-1} = \sum_{k=1}^n \frac{1}{\sigma_k^2} u_k u_k^*
+  \end{equation}
+  Multiplying by $A^*$, we obtain
+  \begin{equation}
+    (A^*A)^{-1}A^* = \left(\sum_{j=1}^n \frac{1}{\sigma_j^2} u_j u_j^*\right) \left(\sum_{k=1}^n \sigma_k u_k v_k^*\right) = \sum_{k=1}^n \frac{1}{\sigma_k} u_k v_k^* = A^+
+  \end{equation}
+
+  \item when $A$ has linearly independent rows, the rank is $r=m$. The set $\{v_1, \dots, v_m\}$ forms an orthonormal basis for ${C}^m$, so we have $\sum_{k=1}^m v_k v_k^* = I$. Thus
+  \begin{equation}
+    (AA^*)^{-1} = \left(\sum_{k=1}^m \sigma_k^2 v_k v_k^*\right)^{-1} = \sum_{k=1}^m \frac{1}{\sigma_k^2} v_k v_k^*
+  \end{equation}
+  Multiplying $A^*$ by this inverse, we obtain
+  \begin{equation}
+    A^*(AA^*)^{-1} = \left(\sum_{k=1}^m \sigma_k u_k v_k^*\right) \left(\sum_{j=1}^m \frac{1}{\sigma_j^2} v_j v_j^*\right) = \sum_{k=1}^m \frac{1}{\sigma_k} u_k v_k^* = A^+
+  \end{equation}
+
+\end{itemize}
+
+
+
+
+\end{document}

@@ -1,0 +1,351 @@
+\documentclass[a4paper]{article}
+\usepackage[affil-it]{authblk}
+\usepackage[backend=bibtex,style=numeric]{biblatex}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{graphicx}
+\geometry{margin=1.5cm, vmargin={0pt,1cm}}
+\setlength{\topmargin}{-1cm}
+\setlength{\paperheight}{29.7cm}
+\setlength{\textheight}{25.3cm}
+
+\addbibresource{citation.bib}
+
+\begin{document}
+% =================================================
+\title{Numerical Analysis homework \# 2}
+
+\author{Guang Zhang 3230105121
+  \thanks{Electronic address: \texttt{zhuiguang49@foxmail.com}}}
+\affil{(Information and Computing Science, Class XJ2301), Zhejiang University }
+
+\date{Due time: \today}
+
+\maketitle
+
+
+
+% ============================================
+\section*{I. Question I}
+
+\subsection*{I-a}
+Let's consider the Lagrange formula, we have
+\begin{equation}
+  p_1(x)=\sum_{k=0}^1 f_kl_k(x) \label{eq:Lagrange formula}
+\end{equation}
+In which $f_1=f(x_1)=\frac{1}{2},f_0=f(x_0)=1$. In addition, we have 
+\begin{equation}
+  l_k(x)=\prod_{i\neq k,i=0}^n\frac{(x-x_i)}{(x_k-x_i)} \label{eq:base polynomial}
+\end{equation}
+Then we can obtain that 
+\begin{align}
+  l_1(x) &= \frac{x - x_0}{x_1 - x_0} = x - 1 \\
+  l_0(x) &= \frac{x - x_1}{x_0 - x_1} = -x + 2
+\end{align}
+Thus, we have
+\begin{equation}
+  p_1(x)=-\frac{1}{2}x+\frac{3}{2}
+\end{equation}
+In the end, we can obtain that
+\begin{equation}
+  f(x)-p_1(x)=\frac{1}{x}+\frac{1}{2}x-\frac{3}{2}=\frac{f''(\xi(x))}{2}(x-1)(x-2)
+\end{equation}
+Which means that $\xi^3(x)=2x$, so we can obtain that
+\begin{equation}
+  \xi(x)=\sqrt[3]{2x},\qquad x\in(1,2)
+\end{equation}
+
+\subsection*{I-b}
+
+It is acknowledged that $\xi(x)=\sqrt[3]{2x}$ is a monotonic increasing function on $[1,2]$, so it is obvious
+that $\max{\xi(x)}=\xi(2)=\sqrt[3]{4}, \min{\xi(x)}=\xi(1)=\sqrt[3]{2}$. As for $\max{f''(\xi(x))}$, since $f''(\xi(x))=\frac{1}{x},x\in[1,2]$,
+which is obviously a monotonic decreasing function, so $\max{f''(\xi(x))}=f''(\xi(1))=1$.
+
+
+\section*{II. Question II}
+To ensure that $p(x)\geq 0$ yields for all $x\in R$, we try to find $q \in P_n$ that satisfies $p(x)=[q(x)]^2$. And since $p(x_i)=f_i$ yields, we can let $q(x_i)=\sqrt{f(x_i)}$ yields.
+Now the question has been turned into another question, that is, find $q\in P_n$, which statisfies $q(x_i)=\sqrt{f(x_i)}$ for $i=0,1,\cdots,n$. We can turn to the Lagrange formula for help,
+just consider
+\begin{equation}
+  q(x)=\sum_{k=0}^n\sqrt{f(x_k)}l_k(x)
+\end{equation}
+In which, $l_k(x)$ satisfies the following equations.
+\begin{equation}
+  l_k(x)=\prod_{i\neq k,i=0}^n\frac{x-x_i}{x_k-x_i}
+\end{equation}
+That is to say, the $p(x)$ we find is 
+\begin{equation}
+  p(x)=[\sum_{k=0}^n\sqrt{f(x_k)}\prod_{i\neq k,i=0}^n\frac{x-x_i}{x_k-x_i}]^2
+\end{equation}
+Let's verify the requirements.
+\begin{itemize}
+  \item $p(x)\geq$ yields.
+  \item $p(x) \in P_{2n}$ yields.
+  \item $p(x_i)=[\sqrt{f_i}]^2=f_i$ yields.
+\end{itemize}
+Therefore, we find a $p(x)\in P_{2n}^{+}$ that matches the questions' requirements.
+
+\section*{III. Question III}
+\subsection*{III-a}
+When $n=1$, we have
+\begin{equation}
+  f[t,t+1]=\frac{f(t+1)-f(t)}{t+1-t}=e^t(e-1)
+\end{equation}
+which fits the problem.
+Assume that the formula holds when $n=k$, then when $n=k+1$, we can obtain that
+\begin{equation}
+  f[t,t+1,\cdots,t+k+1]=\frac{f[t+1,t+2,\cdots,t+k+1]-f[t,t+1,\cdots,t+k]}{t+k+1-t} \label{eq:n=k+1}
+\end{equation}
+By the indcutivte hypothesis, we can obtain that
+\begin{align}
+  f[t,t+1,\cdots,t+k]&=\frac{(e-1)^k}{k!}e^t \\
+  f[t+1,t+2,\cdots,t+k+1] &= \frac{(e-1)^k}{k!}e^{t+1}
+\end{align}
+Substitue the above equation into the equation(\ref{eq:n=k+1}), we can obtain that
+\begin{equation}
+  f[t,t+1,\cdots,t+k+1]=\frac{(e-1)^k(e^{t+1}-e^{t})}{(k+1)k!}=\frac{(e-1)^{k+1}}{(k+1)!}e^t
+\end{equation}
+Thus, the equation holds when $n=k+1$, which means the euqation holds for all $n\in N^{*}$.
+\subsection*{III-b}
+From III-a we have the equation
+\begin{equation}
+  \forall t\in R, f[t,t+1,\cdots,t+n]=\frac{(e-1)^n}{n!}e^t \label{eq:inductive conclusion}
+\end{equation}
+In the equation(\ref{eq:inductive conclusion}), let $t=0$, we can obtain that 
+\begin{equation}
+  f[0,1,\cdots,n]=\frac{(e-1)^n}{n!} \label{eq:equation1}
+\end{equation}
+And by Corollary 2.22 we have
+\begin{equation}
+  f[0,1,\cdots,n]=\frac{f^{(n)}(\xi)}{n!}=\frac{e^{\xi}}{n!} \label{eq:equation2}
+\end{equation}
+Simultaneously solve equation(\ref{eq:equation1})(\ref{eq:equation2}), we can obtain that $\xi=n\ln(e-1)$. And $xi$ locates to the right of the midpoint $\frac{n}{2}$.
+Cause $\xi=n\ln(e-1)>\frac{n}{2}\iff \ln(e-1) > \frac{1}{2} \iff e-1>\sqrt{e}$. And we know that $e\approx 2.718$, while $\sqrt{e}\approx 1.648$, so $e-1>\sqrt{e}$ holds, which means
+$\xi > \frac{n}{2}$ holds.  
+\section*{IV. Question IV}
+\subsection*{IV-a}
+By Newton formula, we can obtain that
+\begin{equation}
+  p_3(f;x)=\sum_{k=0}^n a_k\pi_k(x) \label{eq:Newton formula}
+\end{equation}
+In equation(\ref{eq:Newton formula}), $a_k$ is actually the difference quotient $f[x_0,\cdots,x_k]$, which we 
+can compute recursively. First of all, we have $a_0=f[x_0]=f(0)=5$, then we have
+\begin{align}
+  a_1&=f[x_0,x_1]=\frac{f_1-f_0}{1-0}=-2  \\
+  a_2&=f[x_0,x_1,x_2]=\frac{f[x_1,x_2]-f[x_0,x_1]}{x_2-x_0}=1  \\
+  a_3&=f[x_0,x_1,x_2,x_3]=\frac{f[x_1,x_2,x_3]-f[x_0,x_1,x_2]}{x_3-x_0}=\frac{1}{4}
+\end{align}
+And $\pi_k(x)$ is given by the definition as follows
+\begin{equation}
+  \pi_n(x)=\begin{cases}
+    1,&n=0\\
+    \prod_{i=0}^{n-1}(x-x_i),&n>0
+  \end{cases}
+\end{equation}
+Therefore, we can obtain that
+\begin{equation}
+  p_3(f;x)=\sum_{k=0}^na_k\pi_{k}(x)=\frac{1}{4}x^3-\frac{9}{4}x+5
+\end{equation}
+\subsection*{IV-b}
+By IV-a, we use $p_3(f;x)$ to approximately simulation $f(x)$'s behaviour, so we can use $p_3(f;x)$ to approximate the value of $x_{\text{min}}$.
+We have $p'(x)=\frac{3}{4}x^2-\frac{9}{4},p''(x)=\frac{3}{2}x$. By solving the equation $p'(x)=0$, we can obtain that $x=\pm \sqrt{3}$, while $x=\sqrt{3}$ is the root we want.
+Then let's verify its property. Since $p''(x)>0$ holds for $x\in(1,3)$, we can obtain that $x=\sqrt{3}$ is a minimum point of $p(x)$. So we get an approximate value for the location $x_{min}$ of the minimum,which is $\sqrt{3}$.
+\section*{V. Question V}
+\subsection*{V-a}
+According to Corollary 2.36, the nth divided difference at $n+1$ "confluent" points is 
+\begin{equation}
+  f[x_0,x_0,\cdots,x_0]=\frac{1}{n!}f^{(n)}(x_0)
+\end{equation}
+where $x_0$ is repeated $n+1$ times on the left-hand side.
+By the definition of generalized divided difference, we can construct the divided difference table as follows
+
+\begin{table}[H]
+\centering
+  \begin{tabular}{l|llllll}
+  $0$ & $0$   &              &                   &                    &                            &      \\
+  $1$ & $1$   & $1$          &                   &                    &                            &      \\
+  $1$ & $1$   & $7$          & $6$               &                    &                            &      \\
+  $1$ & $1$   & $7$          & $21$              & $15$               &                            &      \\
+  $2$ & $2^7$ & $2^7-1$      & $2^7-8$           & $2^7-29$           & $2^6-22$                   &      \\
+  $2$ & $2^7$ & $7\cdot 2^6$ & $7\cdot 2^6-2^8+9$ & $7\cdot 2^6-2^8+9$ & $7\cdot 2^6-3\cdot 2^7+38$ & $30$
+  \end{tabular}
+\end{table}
+
+\noindent From the table, we can obtain that $f[0,1,1,1,2,2]=30$
+
+\subsection*{V-b}
+We just need to solve the equation
+\begin{equation}
+  f[0,1,1,1,2,2]=\frac{f^{(5)}(\xi)}{5!}
+\end{equation}
+It is easy to obtain that $f^{(5)}(x)=2520x^2$, that is to say
+\begin{equation}
+  \frac{2520\xi^2}{5!}=30
+\end{equation}
+from which we can obtain that $\xi=\frac{\sqrt{70}}{7}$
+
+\section*{VI. Question VI}
+\subsection*{VI-a}
+To use Newton formula, we can turn the condition into a sef of nodes that $x_0=0,x_1=1,x_2=1,x_3=3,x_4=4$.
+Similar to Question V, we can construct the divided difference table as follows
+\begin{table}[H]
+\centering
+  \begin{tabular}{l|lllll}
+  $0$ & $1$ &      &               &               &                 \\
+  $1$ & $2$ & $1$  &               &               &                 \\
+  $1$ & $2$ & $-1$ & $-2$          &               &                 \\
+  $3$ & $0$ & $-1$ & $0$           & $\frac{2}{3}$ &                 \\
+  $3$ & $0$ & $0$  & $\frac{1}{2}$ & $\frac{1}{4}$ & $-\frac{5}{36}$
+  \end{tabular}
+\end{table}
+\noindent So by Newton formula, we can get $H_4(x)$ satisfies
+\begin{equation}
+  H_4(x)=f[x_0]+f[x_0,x_1](x-x_0)+f[x_0,x_1,x_2]\prod_{i=0}^{1}(x-x_i)+f[x_0,x_1,x_2,x_3]\prod_{i=0}^{2}(x-x_i)+f[x_0,x_1\cdots,x_4]\prod_{i=0}^{3}(x-x_i)
+\end{equation}
+Thus, we have $H_4(x)=1+x-2x(x-1)+\frac{2}{3}x(x-1)^2-\frac{5}{36}x(x-1)^2(x-3)$. When $x=2$, we have $H_4(2)=\frac{11}{18}$. Therefore,
+by Hermite interpolation, $f(2)\approx H_4(2)=\frac{11}{18}$
+\subsection*{VI-b}
+It is acknowledged that if we have $n+1$ conditions, and the most degree of the polynomials is $n$, then we have the error $E(x)$
+\begin{equation}
+  E(x)=f(x)-H_n(x)=\frac{f^{(n+1)}(\xi)}{(n+1)!}\prod_{i=0}^n(x-x_i)
+\end{equation}
+in which $\xi \in (x_0,x_n)$.
+So in this case we can obtain that
+\begin{equation}
+  E(x)=\frac{f^{(5)}(\xi)}{5!}(x-0)(x-1)(x-1)(x-3)(x-3)
+\end{equation}
+When $x=2$, we have 
+\begin{equation}
+  |E(2)|=|\frac{f^{(5)}(\xi)}{60}|\leq \frac{M}{60}
+\end{equation}
+
+\section*{VII. Question VII}
+We use induction to prove the equation. First of all, we prove the forward version.
+When $k=1$, $\Delta f(x_0)=f(x_0+h)-f(x_0)=f(x_1)-f(x_0)$, $1!h^1f[x_0,x_1]=h\cdot\frac{f(x_1)-f(x_0)}{x_1-x_0}=f(x_1)-f(x_0)$, that si to say,
+the forward difference formula holds when $k=1$. Assumes that the forward difference formula holds when $k=n$, $\Delta^nf(x_0)=n!h^nf[x_0,x_1,\cdots,x_n]$, then when $k=n+1$,
+we can obtain that 
+\begin{align}
+  \Delta^{n+1}f(x_0)=\Delta\Delta^nf(x_0)=\Delta^nf(x_0+h)-\Delta^nf(x_0)=n!h^n[f[x_1,\cdots,x_{n+1}]-f[x_0,\cdots,x_n]]
+\end{align}
+Since $f[x_1,\cdots,x_{n+1}]-f[x_0,\cdots,x_n]=(x_{n+1}-x_0)f[x_0,x_1,\cdots,x_{n+1}]=(n+1)hf[x_0,x_1,\cdots,x_{n+1}]$, so we can obtain that
+\begin{equation}
+  \Delta^{n+1}f(x_0)=(n+1)!h^{n+1}f[x_0,x_1,\cdots,x_{n+1}]
+\end{equation}
+So by induction we can obtain that the forward difference formula holds for all $k\in N^{*}$.\newline
+The proof of the backward difference formula is similar. When $k=1$, $\bigtriangledown f(x)=f(x)-f(x-h)=hf[x_0,x_{-1}]$. Assumes that the backward difference formula holds when $k=n$,
+$\bigtriangledown^n f(x_0)=n!h^n f[x_0,x_{-1},\cdots,x_{-n}]$, then when $k=n+1$, we can obtain that
+\begin{equation}
+  \bigtriangledown^{n+1}f(x_0)=\bigtriangledown\bigtriangledown^nf(x_0)=\bigtriangledown^nf(x_0)-\bigtriangledown^nf(x_0-h)=n!h^n[f[x_0,x_{-1},\cdots,x_{-n}]-f[x_{-1},\cdots,x_{-(n+1)}]]
+\end{equation}
+Since $f[x_0,x_{-1},\cdots,x_{-n}]-f[x_{-1},\cdots,x_{-(n+1)}]=(x_0-x_{-(n+1)})f[x_0,\cdots,x_{-(n+1)}]=(n+1)hf[x_0,\cdots,x_{-(n+1)}]$, so we can obtain that
+\begin{equation}
+  \bigtriangledown^{n+1}f(x_0)=(n+1)!h^{n+1}f[x_0,\cdots,x_{-(n+1)}]
+\end{equation}
+So by induction we can obtain that the backward difference formula holds for all $k\in N^{*}$.
+
+\section*{VIII. Question VIII}
+By the definition of partial derivative, we have
+\begin{equation}
+  \frac{\partial}{\partial x_0}f[x_0,x_1,\cdots,x_n]=\lim_{z\to x_0}\frac{f[z,x_1,\cdots,x_n]-f[x_0,x_1,\cdots,x_n]}{z-x_0} \label{eq:generalized divided difference}
+\end{equation}
+And according to corollary 2.15, the divided difference has nothing to do with the order of the points, we can obtain that $f[z,x_1,\cdots,x_n]=f[x_1,\cdots,x_n,z]$.
+Combining the equation(\ref{eq:generalized divided difference}) and the recursive definition of divided difference, we have
+\begin{equation}
+  \frac{f[z,x_1,\cdots,x_n]-f[x_0,x_1,\cdots,x_n]}{z-x_0}=f[x_0,z,x_1,\cdots,x_n] \label{eq:divided difference helper}
+\end{equation}
+Due to the continuous differentiability of the function $f$ and equation(\ref{eq:generalized divided difference})(\ref{eq:divided difference helper}), we can obtain that
+\begin{equation}
+  \lim_{z\to x_0}f[x_0,z,x_1,\cdots,x_n]=f[\lim_{z\to x_0}x_0,\lim_{z\to x_0}z,\cdots,\lim_{z\to x_0}x_n]=f[x_0,x_0,x_1,\cdots,x_n]
+\end{equation}
+What's more, the partial derivative with respect to one of the other variables also fix the theory, cause the divided difference is symmetric to the variables and has nothing to do with the order.
+We can just exchange the other of the variable chosen with the first variable, then it will be turned into the case that we have proved.
+
+\section*{IX. Question IX}
+
+As we all know, the Chebyshev polynomial of the first kind, $T_n(t)$ is defined by $T_n(t)=\cos(n \arccos t)$ for $t\in[-1,1]$, and a key property is that for $n\geq 1$, the leading coefficient
+of $T_n(t)$ is $2^{n-1}$.
+By Theorem 2.47, we know that the standard theory for such problems is defined on the interval $[-1,1]$, so we'd like to apply a linear
+transformation to map the interval $[a,b]$ onto $[-1,1]$. To achieve the goal, we can do a change $x=\frac{b-a}{2}t+\frac{a+b}{2}$. By this mapping, the given
+polynomial $P(x)=a_0x^n+a_1x^{n-1}+\cdots+a_n$ is transformed into a new polynomial $Q(t)=P(\frac{b-a}{2}t+\frac{a+b}{2})$ in the variable $t$. Thus, the problem is 
+equivalent to finding the minimum of the maximum absolute value of $Q(t)$, which we denote as $c$, is derived from the $t^n$ term of the expression $a_0(\frac{b-a}{2}t+\frac{a+b}{2})^n$. This yields $c=(\frac{b-a}{2})^n$.\newline
+According to the fundamental theorem of approximation theory, the polynomial of degree $n$ with a fixed leading coefficient $c$ that has the smallest maximum absolute value on $[-1, 1]$ is a scaled Chebyshev polynomial of the first kind, and the value of this minimum maximum is given by $\frac{|c|}{2^{n-1}}$. By substituting the expression for our leading coefficient $c$ into this formula, we can find the solution. The minimum value is
+$$ \frac{\left| a_0 \left( \frac{b-a}{2} \right)^n \right|}{2^{n-1}} = \frac{|a_0| \frac{(b-a)^n}{2^n}}{2^{n-1}} $$
+Simplifying this expression, we arrive at the final result. Therefore, the solution to the problem is:
+$$ \min_{a_i \in R} \max_{x \in [a,b]} |P(x)| = \frac{|a_0|(b-a)^n}{2^{2n-1}} $$
+
+
+\section*{X. Question X}
+We can use proof by contradiction. Assume that a polynomial $p(x)\in P_n^a$ which statisfies
+\begin{equation}
+  ||p||_{\infty}<||\hat{p_n}||_{\infty}
+\end{equation}
+Then by the definition of Infinity norm, we can obtain that
+\begin{equation}
+  ||\hat{p_n}||_{\infty}=\max_{x\in[-1,1]}|\frac{T_n(x)}{T_n(a)}|=\frac{1}{|T_n(a)|}\max_{x\in[-1,1]}|T_n(x)|
+\end{equation}
+Since $a>1$, $T_n(a)>0$ and $\max_{x\in[-1,1]}|T_n(x)|=1$, we can obtain that
+\begin{equation}
+  ||\hat{p_n}||_{\infty}=\frac{1}{T_n(a)}
+\end{equation}
+We can construct a new polynomial $q(x)$ as follows
+\begin{equation}
+  a(x)=\hat{p_n(x)}-p(x)=\frac{T_n(x)}{T_n(a)}-p(x)
+\end{equation}
+Since the degree of $\hat{p_n(x)}$ and $p(x)$ is no more than $n$, the degree of $q(x)$ is also no more than $n$, that is to say, $q(x)\in P_n$. And we have 
+$q(a)=\hat{p}_{n}(a)-p(a)$, according to the definition of $P_n^a$, we can obtain that $\hat{p}_{n}(a)=p(a)=1$, so that $q(a)=0$, which means that $x=a$ is a root
+of $p(x)$. And at the intersection point $x_k=\cos(\frac{k\pi}{n}),k=0,1,\cdots,n$, we have $T_n(x_k)=(-1)^k$, thus, we have
+\begin{equation}
+  \hat{p}_n(x_k)=\frac{T_n(x_k)}{T_n(a)}=\frac{(-1)^k}{T_n(a)}=(-1)^k||\hat{p}_n||_{\infty}.
+\end{equation}
+When $k$ is even, we have $T_n(x_k)=1$, so $\hat{p}_n(x_k)=\frac{1}{T_n(a)}=||\hat{p}_n||_{\infty}$, and according to our hypothesis, we have $|p(x_k)|\leq ||p||_{\infty}<||\hat{p}_n||_{\infty}$,
+so $p(x_k)<||\hat{p}_n||_{\infty}$, so $q(x_k)>0$. Similarly, when $k$ is odd, we can obtain that $q(x_k)<0$, then we can get that $q(x)$ has at least one root at the interval $(x_{k+1},x_k)$. Therefore,
+we find $n$ root which are difference from each other in the interval $(-1,1)$. And we also have $q(a)=0$, in which $q>1$, which means that $q(x)$ has at least $n+1$ root. While $q(x)$ is a polynomial with its degree
+no more than $n$, then we can obtain that $q(x)\equiv 0$.
+Since $q(x)\equiv 0$, we have $\hat{p}_n(x)-p(x)\equiv 0$, which means $p(x)=\hat{p}_n(x)$, then we have $||p||_{\infty}=||\hat{p}_n||_{\infty}$, which is contradict to our initial hypothesis.
+So for any $p(x)\in P_n^a$, $||\hat{p}_n||_{\infty}\leq ||p||_{\infty}$ always holds.
+
+
+
+\section*{XI. The proof of Lemma 2.53}
+According to the definition of the Bernstein base polynomials, we have
+\begin{align}
+  b_{n,k}(t)&=C_n^kt^k(1-t)^{n-k}\\
+  b_{n-1,k}(t)&=C_{n-1}^k t^k(1-t)^{n-k-1}\\
+  b_{n,k+1}(t)&=C_n^{k+1}t^{k+1}(1-t)^{n-k-1}
+\end{align}
+And RHS can be turned into equation as follows
+\begin{equation}
+  \frac{n-k}{n}b_{n,k}(t)+\frac{k+1}{n}b_{n,k+1}(t)=\frac{n-k}{n}\frac{n!}{k!(n-k)!}t^k(1-t)^{n-k}+\frac{k+1}{n}\frac{n!}{(k+1)!(n-1-k)!}t^{k+1}(1-t)^{n-k-1} \label{eq:Lemma 2.53}
+\end{equation}
+By Simplifying equation(\ref{eq:Lemma 2.53}), we can obtain that
+\begin{equation}
+  \frac{n-k}{n}b_{n,k}(t)+\frac{k+1}{n}b_{n,k+1}(t)=\frac{(n-1)!}{k!(n-1-k)!}t^k(1-t)^{n-k-1}[t+(1-t)]=C_{n-1}^kt^k(1-t)^{n-k-1}=b_{n-1,k}(t)
+\end{equation}
+
+\section*{XII. The proof of Lemma 2.55}
+Due to the definition of the Bernstein base polynomials, we have
+\begin{equation}
+  \int_0^1b_{n,k}(t)=\int_0^1C_n^kt^k(1-t)^{n-k} dt= C_n^k\int_0^1 t^k(1-t)^{n-k}dt
+\end{equation}
+We can compute the integral by parts as follows
+\begin{equation}
+  \int_0^1 t^k(1-t)^{n-k}dt=\frac{1}{k+1}\int_0^1(1-t)^{n-k}d t^{k+1}=\frac{1}{k+1}[(1-t)^{n-k}t^{k+1}\big|_{0}^1-\int_0^1 t^{k+1}d(1-t)^{n-k}] \label{eq:lemma 2.55}
+\end{equation}
+By Simplifying the equation(\ref{eq:lemma 2.55}), we can obtain that
+\begin{equation}
+  \int_0^1 b_n^k(t)=C_n^k\times \frac{-1}{k+1}\int_0^1 t^{k+1}d(1-t)^{n-k}
+\end{equation}
+While $\frac{-1}{k+1}\int_0^1t^{k+1}d(1-t)^{n-k}=\frac{n-k}{k+1}\int_0^1t^{k+1}(1-t)^{n-k-1}dt$. Thus, we have
+\begin{equation}
+  \int_0^1 b_{n,k}(t)=C_n^k\times \frac{n-k}{k+1}\int_0^1t^{k+1}(1-t)^{n-k-1}dt=\int_0^1b_{n,k+1}(t)
+\end{equation}
+By recursion, we can obtain that $\int_0^1 b_{n,k}(t)=\int_0^1b_{n,n}(t)$, which is easy to compute
+\begin{equation}
+  \int_0^1 b_{n,n}(t)=\int_0^1C_n^n t^ndt=\int_0^1t^ndt=\frac{t^{n+1}}{n+1}\big|_0^1=\frac{1}{n+1}
+\end{equation}
+Therefore, we have proved that
+\begin{equation}
+  \forall k = 0,1,\cdots,n\qquad \int_0^1 b_{n,k}(t)=\frac{1}{n+1}
+\end{equation}
+\end{document}

@@ -1,0 +1,212 @@
+\documentclass[a4paper]{article}
+\usepackage[affil-it]{authblk}
+\usepackage[backend=bibtex,style=numeric]{biblatex}
+
+\usepackage{geometry}
+\geometry{margin=1.5cm, vmargin={0pt,1cm}}
+\setlength{\topmargin}{-1cm}
+\setlength{\paperheight}{29.7cm}
+\setlength{\textheight}{25.3cm}
+
+\addbibresource{citation.bib}
+
+\begin{document}
+% =================================================
+\title{Numerical Analysis homework \# 1}
+
+\author{Guang Zhang 3230105121
+  \thanks{Electronic address: \texttt{zhuiguang49@foxmail.com}}}
+\affil{(Information and Computing Science, Class XJ2301), Zhejiang University }
+
+
+\date{Due time: Spetember 30,2025}
+
+\maketitle
+
+
+
+
+
+
+% ============================================
+\section*{I.Consider the width of the interval and the supreme of the distance of bisection method}
+
+\subsection*{I-a}
+
+Let the initial length of the interval $width_0$ be $2$. For bisection method, the width of the interval halves each loop, that is,
+\begin{equation}
+    width_{k+1} = \frac{width_k}{2}, \quad k = 0,1,2,\dots
+\end{equation}
+Thus, by recursion, we can obtain that
+\begin{equation}
+    width_n = \frac{width_0}{2^n} = 2^{-n}\times 2=2^{1-n} \qquad n=0,1,2,\cdots
+\end{equation}    
+
+\subsection*{I-b}
+Let the mid point of the interval at the nth step be $m_n=\frac{a_n+b_n}{2}$. It is acknowledged that $m_0 = 2.5$. The distance of the midpoint and the rooot is $d=|r-m_n|=|r-\frac{a_n+b_n}{2}|$.
+since $r$ is in the interval $[a_n,b_n]$, it is obvious that $d$ will achieve its maximum value when $r=a_n$ or $r=b_n$.
+When $r=a_n$, we have $d = |a_n-\frac{a_n+b_n}{2}$, while $r=b_n$, we have $d = |b_n-\frac{a_n+b_n}{2}|$.
+Thus, we have
+\begin{equation}
+    d_{max} = |r-m_n| = |r-\frac{a_n+b_n}{2}|  = \frac{b_n-a_n}{2} = \frac{width_n}{2}
+\end{equation}
+When $n=0$, $d$ reaches its supremum, that is, $d_{max} = \frac{width_0}{2} = 1$. 
+
+\section*{II.Estimation of the relative error of bisection method}
+
+Let the accurate root be $r$, the estimated root at nth step be $r_n = \frac{a_n+b_n}{2}$. Then the relative
+error at the nth setp is 
+\begin{equation}
+    e_n = \frac{|r-r_n|}{|r|} = \frac{|r-\frac{a_n+b_n}{2}|}{|r|} = \frac{b_n-a_n}{2r}=\frac{2^{-n}(b_0-a_0)}{2r}=\frac{2^{-n-1}(b_0-a_0)}{r}
+\end{equation}
+Since we have $a_n\leq r \leq b_n$, we have
+\begin{equation}
+  e_n = \frac{2^{-n-1}(b_0-a_0)}{r}\leq \frac{2^{-n-1}(b_0-a_0)}{a_0}  \label{eq:后续引用}
+\end{equation}
+When $n$ statisfies
+\begin{equation}
+  n\geq \frac{\log(b_0-a_0)-\log \epsilon-\log a_0}{\log 2}-1
+\end{equation}
+We can obtain that
+\begin{equation}
+ e_n\leq \frac{2^{-n-1}(b_0-a_0)}{a_0}\leq \frac{2^{\frac{-\log(b_0-a_0)+\log \epsilon+\log a_0}{\log 2}+1-1}\cdot(b_0-a_0)}{a_0}=\frac{a_0\epsilon(b_0-a_0)}{a_0(b_0-a_0)}=\epsilon
+\end{equation}
+Thus, we have
+\begin{equation}
+  e_n\leq \epsilon
+\end{equation}
+So the relative error of bisection method is no greater than $\epsilon$.
+% ===============================================
+\section*{III.Caculation of Newton's method }
+The iteration formula of Newton method is
+\begin{equation}
+    x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)} \qquad n\in \mathrm{N}
+\end{equation}
+The derivative of $p(x)$ is $p'(x)=12x^2-4x$.
+By using hand caculator, we have the table as follows:
+\begin{figure}[h]
+  \centering
+  \begin{tabular}{|c|c|c|c|}
+  \hline
+  $x_n$ & $p(x_n)$ & $p'(x_n)$ & $x_{n+1}$ \\
+  \hline
+  -1.0000000000000000 & -3.0000000000000000 & 16.0000000000000000 & (Starts iteration) \\
+  \hline
+  -1.0000000000000000 & -3.0000000000000000 & 16.0000000000000000 & -0.8125000000000000 \\
+  \hline
+  -0.8125000000000000 & -0.4658203125000000 & 11.1718750000000000 & -0.7708041958041958 \\
+  \hline
+  -0.7708041958041958 & -0.0201378867202289 & 10.2128860824490200 & -0.7688323842557603 \\
+  \hline
+  -0.7688323842557603 & -0.0000437084334135 & 10.1685683579878050 & -0.7688280858696085 \\
+  \hline
+  \end{tabular}
+  \caption{Newton's method iterations for $p(x) = 4x^3 - 2x^2 + 3 = 0$ starting from $x_0 = -1$.}
+  \label{fig:newton-iterations}
+  \end{figure}
+\section*{IV.Variation of Newton's method}
+We have $e_{n+1}=|x_{n+1}-\alpha|,e_n=|x_n-\alpha|$. Through the formula of the variation of Newton's method, we can obtain that
+\begin{equation}
+    e_{n+1}=|x_{n+1}-\alpha| = |x_n - \frac{f(x_n)}{f'(x_0)}-\alpha|  \label{eq:牛顿迭代公式变式}
+\end{equation}
+Since $\alpha$ is the true solution, that is to say, $f(\alpha)=0$. Substitute it into equation (\ref{eq:牛顿迭代公式变式}) we can obtain that 
+\begin{equation}
+    e_{n+1}=|x_n-\frac{f(x_n)-f(\alpha)}{f'(x_0)}-\alpha| \label{eq:牛顿迭代公式进一步化简}
+\end{equation}
+By Mean Value Theorem, we have $f(x_n)-f(\alpha)=f'(\xi)(x_n-\alpha)$,while $\xi$ is between $x_n$ and $\alpha$.
+Then the equation (\ref{eq:牛顿迭代公式进一步化简}) can be
+\begin{equation}
+    e_{n+1}=|x_n-\frac{f'(\xi)(x_n-\alpha)}{f'(x_0)}-\alpha|=|x_n-\alpha||1-\frac{f'(\xi)}{f'(x_0)}|=e_n\big|1-\frac{f'(\xi)}{f'(x_0)}\big| \label{eq:误差关系}
+\end{equation}
+If the variation of Newton's method converges, since $\lim_{n\to\infty}x_n = \alpha,x_n\leq \xi\leq \alpha$ or $\alpha \leq \xi\leq x_n$, we have
+\begin{equation}
+    \lim_{n\to\infty} e_{n+1}=\lim_{n\to\infty}e_n\big|1-\frac{f'(\alpha)}{f'(x_0)}\big|
+\end{equation}
+That is to say, we obtain that $\frac{e_{n+1}}{e_n}=|1-\frac{f'(\alpha)}{f'(x_0)}|$, that is to say, $s=1,C=\big|1-\frac{f'(\alpha)}{f'(x_0)}\big|$
+If we want the variation to converge, then the chosen $x_0$ must be close enough to $\alpha$, in other words, $C<1$.
+\section*{V.Convergence of the inverse tangent function}
+
+The iteration $x_{n+1}=\tan^{-1}(x_n)$ is equivalent to $x_n=\tan(x_{n+1})$. By the property of function $y=\tan(x),x\in(-\frac{\pi}{2},\frac{\pi}{2})$, we can obtain that if $x>0$,\ $\tan(x)>0$, else if $x<0$,\ $\tan(x)<0$. That is to say, if the start point $x_0<0$, then $x_n<0$ for all the $n=0,1,2,\cdots$,\ else if $x_0>0$, then $x_n>0$ for all the $n=0,1,2,\cdots$. \\
+\\
+And it is acknowledged that when $x\in(-\frac{\pi}{2},0)$, we have $\tan x <x$, when $x\in(0,\frac{\pi}{2})$, we have $\tan x >x$. That is to say, when $x_0\in (-\frac{\pi}{2},0)$, $x_n=\tan x_{n+1}<x_{n+1}$, the sequence $\{x_n\}$ is monotonically increasing. By Monotonic sequence theorem, we can obtain that the iteration converge. When $x_0\in (0,\frac{\pi}{2})$, $x_{n}=\tan x_{n+1}>x_{n+1}$, the sequence $\{x_n\}$ is monotonically decreasing. By Monotonic sequence theorem, we can obtain that the iteration converge.\\
+\\
+Thus, within $(-\frac{\pi}{2},\frac{\pi}{2})$, the iteration always converge.
+
+\section*{VI.Convergence of the fixed-point iterations}
+Consider the function that $g(x)=\frac{1}{p+x} (x\in [0,\frac{1}{p}])$, the continued fraction is equivalent to the fixed-point iteration $x_{n+1}=g(x_n)$. To prove the iteration converge, we can prove that the function $g(x)$ is a contractive mapping on
+$[0,\frac{1}{p}]$. For all $x_1,x_2\in[0,\frac{1}{p}]$, we have
+\begin{equation}
+    \big|g(x_1)-g(x_2)\big|=\big|\frac{1}{p+x_1}-\frac{1}{p+x_2}\big|=\frac{|x_1-x_2|}{|(p+x_1)(p+x_2)|}\leq \frac{|x_1-x_2|}{p^2}
+\end{equation}
+So function $g(x)$ is a continuous contractive mapping on $[0,\frac{1}{p}]$. By the theorem Converge of contractions, the fixed-point iteration converges.
+\section*{VII.Estimation of the relative error of bisection method when the initial interval includes 0}
+First of all, I want to answer the question "In this case, is the relative error still an appropriate measure?". The answer is no! Through the solution of II, we notice that the essential part is the estimation $|r|>a_0$, by which we limit the relative error $e_n$ to the equation ($\ref{eq:后续引用}$). However, in this case, we cannot get a lower bound for $|r|$. So the relative error may not play a role.\\
+\\
+Instead of relative error, we choose to use absolute error $|r-\frac{a_n+b_n}{2}|$ at the nth step. By the process of bisection method, we have
+\begin{equation}
+    |r-\frac{a_n+b_n}{2}|\leq \frac{|b_n-a_n|}{2}=\frac{b_0-a_0}{2^{n+1}}    
+\end{equation}
+Let the absolute error $|r-\frac{a_n+b_n}{2}|\leq\epsilon$, we can transform it into $\frac{b_0-a_0}{2^{n+1}}\leq\epsilon$,that is to say,
+\begin{equation}
+    n\geq \frac{\log(b_0-a_0)-\log \epsilon}{\log 2}-1
+\end{equation}
+
+\section*{VIII.Multiple zero of Newton's method}
+
+\subsection*{VIII-a}
+Let $\alpha$ be zero of multiplicity k of function f, then we have $f(x)=(x-\alpha)^kh(x)$, where $h(\alpha)\neq 0$ and $h(x)$ is differentiable. Let $e_n$ be the error at nth step, then we have $e_n=x_n-\alpha$. Let's consider the relationship of errors at different steps. By Taylor theorem, we have
+\begin{equation}
+    f(x_n) = f(\alpha)+f'(\alpha)(x_n-\alpha)+\frac{f''(\alpha)}{2!}(x_n-\alpha)^2+\cdots+\frac{f^{(k)}(\alpha)}{k!}(x_n-\alpha)^k+\frac{f^{(k+1)}(\xi)}{(k+1)!}(x_n-\alpha)^{k+1} \label{eq:泰勒展开}
+\end{equation}
+in which $\xi$ is between $x_n$ and $\alpha$. Also, we have $f'(\alpha)$ satisfies
+\begin{equation}
+    f'(x_n)=f'(\alpha)+f''(\alpha)(x_n-\alpha)+\cdots+\frac{f^{(k)}(\alpha)}{(k-1)!}(x_n-\alpha)^{k-1}+\frac{f^{(k+1)}(\zeta)}{k!}(x_n-\alpha)^k \label{eq:导数的泰勒展开}
+\end{equation}
+Since $f(\alpha) =0$ and $f^{(m)}(\alpha)=0$ for all $m<k$, the equations (\ref{eq:泰勒展开})(\ref{eq:导数的泰勒展开}) can be written as:
+\begin{equation}
+    f(x_n)=\frac{f^{(k)}(\alpha)}{k!}(x_n-\alpha)^k+\frac{f^{(k+1)}(\xi)}{(k+1)!}(x_n-\alpha)^{k+1} \label{eq:用1}
+\end{equation}
+\begin{equation}
+    f'(x_n)=\frac{f^{(k)}(\alpha)}{(k-1)!}(x_n-\alpha)^{k-1}+\frac{f^{(k+1)}(\zeta)}{k!}(x_n-\alpha)^k \label{eq:用2}
+\end{equation}
+Let error error at the nth step $e_n=x_n-\alpha$, Then we can obtain that
+\begin{equation}
+    \frac{f(x_n)}{f'(x_n)}=\frac{\frac{f^{(k)}(\alpha)}{k!}(x_n-\alpha)^k+\frac{f^{(k+1)}(\xi)}{(k+1)!}(x_n-\alpha)^{k+1}}{\frac{f^{(k)}(\alpha)}{(k-1)!}(x_n-\alpha)^{k-1}+\frac{f^{(k+1)}(\zeta)}{k!}(x_n-\alpha)^k}=\frac{\frac{f^{(k)}(\alpha)}{k!}e_n+\frac{f^{(k+1)}}{(k+1)!}e_n^2}{\frac{f^{(k)}(\alpha)}{(k-1)!}+\frac{f^{(k+1)}(\zeta)}{k!}e_n} \label{eq:比值}
+\end{equation}
+When $e_n$ is small enough, the equation (\ref{eq:比值}) can be written as:
+\begin{equation}
+\frac{f(x_n)}{f'(x_n)}=\frac{\frac{f^{(k)}(\alpha)}{k!}e_n+O(e_n^2)}{\frac{f^{(k)}(\alpha)}{(k-1)!}+O(e_n)}=\frac{\frac{f^{(k)}(\alpha)}{k!}e_n(1+O(e_n))}{\frac{f^{(k)}(\alpha)}{(k-1)!}(1+O(e_n))}=\frac{1}{k}e_n(1+O(e_n)) \label{eq:公式3}
+\end{equation}
+Through the formula of the Newton's method, we have
+\begin{equation}
+    e_{n+1}=e_n-\frac{f(x_n)}{f'(x_n)}=e_n-\frac{e_n}{k}(1+O(e_n))\approx \frac{k-1}{k}e_n
+\end{equation}
+When $e_n$ is small enough, through the equations (\ref{eq:用1})(\ref{eq:用2}), we can obtain that
+\begin{equation}
+    \frac{f(x_{n+1})}{f(x_n)}\approx \frac{\frac{f^{(k)}(\alpha)}{k!}e_{n+1}^k}{\frac{f^{(k)}(\alpha)}{k!}e_{n}^k}=(\frac{e_{n+1}}{e_n})^k=(\frac{k-1}{k})^k
+\end{equation}
+Thus, when $x_n$ is close enough to $\alpha$, that is to say, $e_n$ is small enough, we can caculate $\big|\frac{f(x_{n+1})}{f(x_n)}\big|$, which will stabilize to a value, let it be $L$ then we can solve the equation $(\frac{k-1}{k})^k = L$, finally, we get $k$, which will help us to detect the multiple zero.
+
+\subsection*{VIII-b}
+Since r is a zero of multiplicity k of the function f, we can obtain that:
+\begin{equation}
+    f(x)=(x-r)^k h(x)
+\end{equation}
+where $h(\alpha)\neq 0$ and $h(x)$ is differentiable. While $f'(x)=k(x-r)^{k-1}h(x)+(x-r)^kh'(x)$, we can obtain that
+\begin{equation}
+    \frac{f(x)}{f'(x)}=\frac{(x-r)h(x)}{kh(x)+(x-r)h'(x)}
+\end{equation}
+Through the modification of Newton's method, we have:
+\begin{equation}
+    e_{n+1}=x_{n+1}-r=x_{n}-r-k\frac{(x_n-r)h(x_n)}{kh(x_n)+(x_n-r)h'(x_n)}=e_n-k\frac{e_nh(x_n)}{kh(x_n)+e_nh'(x_n)}
+\end{equation}
+that is to say:
+\begin{equation}
+    e_{n+1}=e_n(1-\frac{1}{1+\frac{e_n}{k}\frac{h'(x_n)}{h(x_n)}})=\frac{\frac{e_n^2}{k}\frac{h'(x_n)}{h(x_n)}}{1+\frac{e_nh'(x_n)}{kh(x_n)}}
+\end{equation}
+When $n\to \infty$, we have $e_n\to 0,\ \frac{h'(x_n)}{h(x_n)}\to\frac{h'(r)}{h(r)}$, then we can obtain that:
+\begin{equation}
+    \lim_{n\to \infty}\frac{|e_{n+1}|}{|e_n|^2}=\frac{h'(r)}{kh(r)}
+\end{equation}
+Which implies that quadratic convergence in Newton's iteration is restored.
+\end{document}
